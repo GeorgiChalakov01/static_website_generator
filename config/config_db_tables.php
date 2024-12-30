@@ -1,0 +1,27 @@
+<?php
+$tables = [
+        'CREATE TABLE IF NOT EXISTS "LANGUAGES" (
+                "ISO_CODE" VARCHAR(2) PRIMARY KEY NOT NULL,
+                "NAME" VARCHAR(50) NOT NULL UNIQUE
+        )',
+        'CREATE TABLE IF NOT EXISTS "PHRASES" (
+                "ID" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                "LANGUAGE_ISO_CODE" VARCHAR(2) NOT NULL,
+                "KEY" VARCHAR(100) NOT NULL,
+                "VALUE" TEXT NOT NULL,
+
+                FOREIGN KEY (LANGUAGE_ISO_CODE) REFERENCES LANGUAGES(ISO_CODE)
+	)',
+        'CREATE TABLE IF NOT EXISTS "VISITS" (
+                "ID" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                "COUNTRY" VARCHAR(100) NOT NULL,
+                "CITY" VARCHAR(100) NOT NULL,
+                "CONTINENT" VARCHAR(100) NOT NULL,
+                "LATITUDE" VARCHAR(100) NOT NULL,
+                "LONGITUDE" VARCHAR(100) NOT NULL,
+                "CURRENCY_SYMBOL" VARCHAR(100) NOT NULL,
+                "CURRENCY_CODE" VARCHAR(100) NOT NULL,
+                "TIMEZONE" VARCHAR(100) NOT NULL
+        )'
+];
+
