@@ -1,3 +1,5 @@
+#!/bin/sh
+
 generator_root=$(pwd)
 
 if [ $# -ne 2 ]; then
