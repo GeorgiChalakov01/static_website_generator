@@ -1,5 +1,5 @@
 This is a static php website generator.
-It is capable of creating a site based on the provided information to it.
+It is capable of creating a site based on the provided to it information.
 
 Before you can generate a website you must do these things:
 1. Tell the generator what components are going to be in your page. This is done through the page_constructor.php file in plane php.
