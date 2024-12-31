@@ -2,13 +2,14 @@
 
 
 function log_user_visit($db) {
-	#$ip = getVisIPAddr();
+	$ip = getVisIPAddr();
 	#$ip = '180.94.77.212'; # Test AFG
-	$ip = '52.25.109.230'; # Test USA
+	#$ip = '52.25.109.230'; # Test USA
 	$ipdat = @json_decode(file_get_contents(
 		'http://www.geoplugin.net/json.gp?ip=' . $ip));
 
-	$stmt = $db->prepare("INSERT INTO VISITS (COUNTRY, CITY, CONTINENT, LATITUDE, LONGITUDE, CURRENCY_SYMBOL, CURRENCY_CODE, TIMEZONE) VALUES (:country, :city, :continent, :latitude, :longitude, :currencySymbol, :currencyCode, :timezone)");
+	$stmt = $db->prepare("INSERT INTO VISITS (IP_HASH, COUNTRY, CITY, CONTINENT, LATITUDE, LONGITUDE, CURRENCY_SYMBOL, CURRENCY_CODE, TIMEZONE) VALUES (:ip_hash, :country, :city, :continent, :latitude, :longitude, :currencySymbol, :currencyCode, :timezone)");
+	$stmt->bindValue(':ip_hash', hash('sha256', 'Let\'s make it more secure with a salt value. Just in case ;)', $ip));
 	$stmt->bindValue(':country', $ipdat->geoplugin_countryName);
 	$stmt->bindValue(':city', $ipdat->geoplugin_city);
 	$stmt->bindValue(':continent', $ipdat->geoplugin_continentName);
@@ -21,7 +22,9 @@ function log_user_visit($db) {
 }
 
 function get_visitor_data($db) {
-	$query = "SELECT COUNT(*) AS USER_COUNT, COUNTRY FROM VISITS GROUP BY COUNTRY";
+	$last_month = date("Y-m-d", strtotime("-1 month"));
+
+	$query = "SELECT COUNT(IP_HASH) AS USER_COUNT, COUNTRY, CITY FROM VISITS WHERE VISIT_DATETIME > '$last_month 00:00:00' GROUP BY COUNTRY, CITY ORDER BY COUNT(IP_HASH) DESC";
 	$results = $db->query($query);
 
 	$visits = array();
