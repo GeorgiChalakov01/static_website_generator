@@ -1,7 +1,7 @@
 <?php
-require_once("config/config.php");
-require_once("config/config_languages.php");
-require_once("config/config_db_tables.php");
+require_once("{$argv[2]}/config.php");
+require_once("{$argv[2]}/config_languages.php");
+require_once("{$argv[2]}/config_db_tables.php");
 require_once("components.php");
 
 

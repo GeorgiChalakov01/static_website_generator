@@ -2,11 +2,19 @@
 
 generator_root=$(pwd)
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
 	echo "Wrong use of the generator. "
-	echo "Usage: ./generate.sh website_name generated_page_name"
-	echo "Example: ./generate.sh my_website index.php"
+	echo "Usage: ./generate.sh website_name generated_page_name config_dir_path"
+	echo "Example: ./generate.sh my_website index.php ../my_website_config"
 	exit 1
+fi
+
+echo "Checking if the config directory exists."
+if [ -d $3 ]; then
+	echo "Exists."
+else
+	echo "$3 does not exist. Aborting."
+	exit
 fi
 
 echo "Checking if the folder generated exists."
@@ -23,11 +31,11 @@ if [ -d "generated/$1" ]; then
 else
 	echo "$1 doesn't exists, copying foundational files."
 	cp -r $generator_root/resources $generator_root/generated/$1
-	cp $generator_root/config/config.php $generator_root/generated/$1
+	cp $generator_root/$3/config.php $generator_root/generated/$1
 fi
 
 echo "Generating $2"
-php $generator_root/page_constructor.php $1 > $generator_root/generated/$1/$2
+php $generator_root/page_constructor.php $1 $3 > $generator_root/generated/$1/$2
 
 echo "Page $2 generated in: generated/$1/"
 
