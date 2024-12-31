@@ -1,8 +1,8 @@
 <?php
-require_once("{$argv[2]}/config.php");
-require_once("{$argv[2]}/config_languages.php");
-require_once("{$argv[2]}/config_db_tables.php");
-require_once("components.php");
+require_once("config.php");
+require_once("config_languages.php");
+require_once("config_db_tables.php");
+require_once("{$argv[2]}/components.php");
 
 
 refresh_db($argv[1], $tables, $languages, $phrases);

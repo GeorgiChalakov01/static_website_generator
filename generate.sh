@@ -35,7 +35,7 @@ else
 fi
 
 echo "Generating $2"
-php $generator_root/page_constructor.php $1 $3 > $generator_root/generated/$1/$2
+php $generator_root/$3/page_constructor.php $1 $generator_root > $generator_root/generated/$1/$2
 
 echo "Page $2 generated in: generated/$1/"
 

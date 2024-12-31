@@ -1,8 +1,8 @@
 <?php
 
 
-function refresh_db($website, $tables, $languages, $phrases) {
-	$db = new SQLite3("generated/$website/db.sqlite", SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+function refresh_db($website_name, $tables, $languages, $phrases) {
+	$db = new SQLite3("generated/$website_name/db.sqlite", SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
 	$db->enableExceptions(true);
 
 	foreach($tables as $table)
